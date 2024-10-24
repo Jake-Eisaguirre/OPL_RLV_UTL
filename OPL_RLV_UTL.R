@@ -55,11 +55,12 @@ clean_rlv <- raw_rlv %>%
   rename(DATE=PAIRING_DATE,
          SEAT = PAIRING_POSITION,
          FLEET = EQUIPMENT) %>% 
-  relocate(CREW_TYPE, .before = SEAT)
+  relocate(CREW_TYPE, .before = SEAT) %>% 
+  mutate(AIRLINE = "HA", .before = CREW_TYPE)
 
 
 
-write_csv(clean_rlv, "F:/RESERVE_UTILIZATION.csv")
+write_csv(clean_rlv, "F:/INFLIGHT_RESERVE_UTILIZATION.csv")
 
 print("Data Uploaded")
 Sys.sleep(10)
