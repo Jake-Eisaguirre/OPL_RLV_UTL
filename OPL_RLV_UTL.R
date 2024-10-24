@@ -50,8 +50,16 @@ clean_rlv <- raw_rlv %>%
   select(PAIRING_POSITION, PAIRING_DATE, BASE, EQUIPMENT, ASN, RLV_SCR, PERCENT_UTILIZATION) %>%
   #mutate(PAIRING_POSITION = "FA") %>%
   relocate(PAIRING_POSITION, .before = PAIRING_DATE) %>%
-  relocate(EQUIPMENT, .before = ASN)
+  relocate(EQUIPMENT, .before = ASN) %>% 
+  mutate(CREW_TYPE = if_else(PAIRING_POSITION %in% c("CA", "FO"), "P", "FA")) %>% 
+  rename(DATE=PAIRING_DATE,
+         SEAT = PAIRING_POSITION,
+         FLEET = EQUIPMENT) %>% 
+  relocate(CREW_TYPE, .before = SEAT)
+
 
 
 write_csv(clean_rlv, "F:/RESERVE_UTILIZATION.csv")
 
+print("Data Uploaded")
+Sys.sleep(10)
