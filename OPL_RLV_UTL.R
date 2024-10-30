@@ -38,7 +38,7 @@ clean_rlv <- raw_rlv %>%
          BASE = if_else(BASE == "HAL", "HNL", BASE),
          TRANSACTION_CODE = if_else(TRANSACTION_CODE == "ARC", "SCR", TRANSACTION_CODE)) %>% 
   group_by(PAIRING_POSITION, PAIRING_DATE, BASE, TRANSACTION_CODE, EQUIPMENT) %>%
-  summarise(DAILY_COUNT = n()) %>%  # Use summarise() instead of mutate() to avoid repeated counts
+  summarise(DAILY_COUNT = length(unique(CREW_ID))) %>%  # Use summarise() instead of mutate() to avoid repeated counts
   ungroup() %>%
   pivot_wider(names_from = TRANSACTION_CODE, values_from = DAILY_COUNT) %>%
   mutate(RLV_SCR = coalesce(RLV, SCR)) %>%
